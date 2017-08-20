@@ -5,14 +5,16 @@ const { JSDOM } = jsdom;
 // console.log(dom.window.document.documentElement.outerHTML);
 
 
-// const dom = new JSDOM(``, {
-//   url: "http://www.24h.com.vn/tin-tuc-trong-ngay/xe-may-dut-doi-3-nguoi-chet-tai-cho-sau-cu-va-cham-kinh-hoang-voi-o-to-c46a888327.html",
-//   referrer: "http://www.24h.com.vn/tin-tuc-trong-ngay/xe-may-dut-doi-3-nguoi-chet-tai-cho-sau-cu-va-cham-kinh-hoang-voi-o-to-c46a888327.html",
-//   contentType: "text/html",
-//   userAgent: "Mellblomenator/9000",
-//   includeNodeLocations: false
-// });
-// console.log(dom.window.document.documentElement.outerHTML);
+const dom = new JSDOM(``, {
+  url: "http://www.24h.com.vn/tin-tuc-trong-ngay/xe-may-dut-doi-3-nguoi-chet-tai-cho-sau-cu-va-cham-kinh-hoang-voi-o-to-c46a888327.html",
+  referrer: "http://www.24h.com.vn/tin-tuc-trong-ngay/xe-may-dut-doi-3-nguoi-chet-tai-cho-sau-cu-va-cham-kinh-hoang-voi-o-to-c46a888327.html",
+  contentType: "text/html",
+  userAgent: "Mellblomenator/9000",
+  includeNodeLocations: false
+});
+console.log(dom.window.document.documentElement.outerHTML);
+
+
 
 
 // const dom = new JSDOM(``, {
@@ -23,10 +25,3 @@ const { JSDOM } = jsdom;
 //   includeNodeLocations: false
 // });
 // console.log(dom.window.document.documentElement.getElementsByTagName('video').length);
-
-var x = "https://r2---sn-i3b7kn7z.c.drive.google.com/videoplayback?id\u003d0bde38b554baf52b\u0026itag\u003d35\u0026source\u003dwebdrive\u0026requiressl\u003dyes\u0026mm\u003d30\u0026mn\u003dsn-i3b7kn7z\u0026ms\u003dnxu\u0026mv\u003dm\u0026pl\u003d24\u0026sc\u003dyes\u0026ttl\u003dtransient\u0026ei\u003dfHOKWbPxJYOmqgXN5bGIBA\u0026susci\u003do-AOm7PtEJi3Ij279l4_PgHN51WbQDZcnCH3ZiqhNLt5foifZQ\u0026driveid\u003d0B9IUGXzrgBm3WS1EYWJweTg1bE0\u0026app\u003dtexmex\u0026mime\u003dvideo/x-flv\u0026gir\u003dyes\u0026clen\u003d69120675\u0026dur\u003d585\u0026lmt\u003d1502217380165175\u0026mt\u003d1502245492\u0026ip\u003d118.70.184.34\u0026ipbits\u003d0\u0026expire\u003d1502260156\u0026cp\u003dQVNFVENfT1FTR1hOOnhtLWFWRmxiS28w\u0026sparams\u003dip%2Cipbits%2Cexpire%2Cid%2Citag%2Csource%2Crequiressl%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Csc%2Cttl%2Cei%2Csusci%2Cdriveid%2Capp%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt%2Ccp\u0026signature\u003d112DF33AD18B2882DFDC5674E2CE62C6AD12144B.1AC8D7A648258F7B6185EC3AC238A99D9CEAF190\u0026key\u003dck2";
-var r = /\\u([\d\w]{4})/gi;
-x = x.replace(r, function (match, grp) {
-    return String.fromCharCode(parseInt(grp, 16)); } );
-x = unescape(x);
-console.log(x);

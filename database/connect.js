@@ -35,6 +35,9 @@ var insertDocuments = function(db, callback) {
 }
 
 
+
+
+
 var getDataFormWeb = function(){
   getData.jsdomFunction(function(object){
       console.log("Inserted 3 documents into the document collection");
