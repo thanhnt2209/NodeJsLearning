@@ -55,6 +55,9 @@ var returnJson = function (arrayManga) {
 var url = 'mongodb://localhost:27017/manga';
 
 
+
+
+
 var connectMongo = function(json){
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
@@ -69,20 +72,21 @@ var connectMongo = function(json){
   });
 }
 
+
+
 var callbackResult = function(result){
   console.log("callbackResult");
   console.log(result);
 }
 
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8888;
 // ROUTES FOR OUR API
 var router = express.Router();
 // get an instance of the express Router
-
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+    res.json({ message: 'ahihi' });
 });
 // REGISTER OUR ROUTES
 app.use('/api', router);
