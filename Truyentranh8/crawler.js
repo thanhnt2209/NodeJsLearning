@@ -23,27 +23,52 @@ function writeFileHTML(html){
   });
 }
 
-jsdom.env(
-  "http://truyentranh8.net/search.php?act=search&sort=truyen&view=detail",
-  ["http://code.jquery.com/jquery.js"],
-  function (err, window) {
-    if(err){
-      console.log(err);
-    }else{
-      var arrayManga = [];
-      window.$("div.btop img.lazy.thumbnail").each(function() {
-        arrayManga.push({
-          name : window.$(this).attr('title'),
-          url : window.$(this).attr('src')
+
+
+var url = 'mongodb://localhost:27017/manga';
+
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected correctly to server");
+
+
+
+
+var insertData = function(json){
+   var collection = db.collection("list_new");
+   collection.insert(json, function(err, doc) {
+     console.log(doc);
+     if(err) throw err;
+   });
+ }
+
+
+var timeCrawler = 60 * 24 * 60 * 1000;
+
+var interval = setInterval(function(){
+  jsdom.env(
+    "http://truyentranh8.net/search.php?act=search&sort=truyen&view=detail",
+    ["http://code.jquery.com/jquery.js"],
+    function (err, window) {
+      if(err){
+        console.log(err);
+      }else{
+        console.log("crawler data sau 10s");
+        var arrayManga = [];
+        window.$("div.btop img.lazy.thumbnail").each(function() {
+          arrayManga.push({
+            name : window.$(this).attr('title'),
+            url : window.$(this).attr('src')
+          });
         });
-      });
-      console.log(arrayManga);
+        console.log(arrayManga);
 
-      connectMongo(returnJson(arrayManga));
+        insertData(returnJson(arrayManga));
+      }
     }
+  );
+},timeCrawler);
 
-  }
-);
 
 var returnJson = function (arrayManga) {
   var obj = {
@@ -52,44 +77,33 @@ var returnJson = function (arrayManga) {
   return obj;
 }
 
-var url = 'mongodb://localhost:27017/manga';
-
-
-
-
-
-var connectMongo = function(json){
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    console.log("Connected correctly to server");
-    var collection = db.collection("list_new");
-    collection.insert(json, function(err, doc) {
-      console.log(doc);
-      if(err) throw err;
-    });
-    // insertDocuments(db, callbackResult);
-    db.close();
-  });
-}
-
-
-
 var callbackResult = function(result){
   console.log("callbackResult");
   console.log(result);
 }
 
 
-var port = process.env.PORT || 8888;
+var port = process.env.PORT || 8889;
 // ROUTES FOR OUR API
 var router = express.Router();
 // get an instance of the express Router
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'ahihi' });
+
+  var collection = db.collection("list_new");
+    collection.find({}).toArray(function(err, docs) {
+      res.json({ message: docs });
+  });
+
+  // db.find({}).toArray(function(err, docs) {
+  //      res.json({ message: docs });
+  //  });
+    // res.json({ message: });
 });
 // REGISTER OUR ROUTES
 app.use('/api', router);
 // START THE SERVER
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+});
